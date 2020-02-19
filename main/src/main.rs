@@ -4,10 +4,18 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use lib::qc::testdata;
+    use quickcheck::quickcheck;
+    use lib::{fun, Foo, quickcheck::TESTDATA};
 
     #[test]
     fn test() {
-        println!("{:x?}", testdata.iter().take(100).collect::<Vec<_>>());
+        println!("{:x?}", TESTDATA.iter().take(100).collect::<Vec<_>>());
+    }
+
+    quickcheck!{
+
+        fn fun_check(x: Foo) -> bool {
+            x.0 * 2 == fun(x)
+        }
     }
 }
